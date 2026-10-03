@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpecTive - Platform Rekomendasi & Perawatan Laptop Masa Depan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#090D16',
+                        cardBg: '#111827',
+                        accentCyan: '#06B6D4',
+                        accentBlue: '#3B82F6',
+                        neonPurple: '#8B5CF6',
+                    },
+                    fontFamily: {
+                        futuristic: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Alpine.js untuk interaksi Mobile Menu, Carousel, & FAQ -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        .neon-glow {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.2);
+        }
+        .neon-border {
+            border: 1px solid rgba(6, 182, 212, 0.4);
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-100 font-futuristic antialiased selection:bg-cyan-500 selection:text-black bg-grid-pattern min-h-screen" x-data="{ mobileMenuOpen: false }">
+
+    <!-- 1. NAVBAR (Responsif dengan Mobile Hamburger Menu) -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-darkBg/90 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Kiri: Profile & Nama Akun -->
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-black text-lg neon-glow">
+                            A
+                        </div>
+                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-darkBg rounded-full"></span>
+                    </div>
+                    <div>
+                        <span class="block text-sm font-semibold tracking-wide text-cyan-400">SpecTive Member</span>
+                        <span class="text-xs text-gray-400">Alif (Informatika)</span>
+                    </div>
+                </div>
+
+                <!-- Kanan: Navigasi Desktop -->
+                <div class="hidden lg:flex items-center space-x-6">
+                    <a href="#rekomendasi" class="text-sm text-gray-300 hover:text-cyan-400 transition">Cari Rekomendasi</a>
+                    <a href="#lokasi" class="text-sm text-gray-300 hover:text-cyan-400 transition">Cari Toko/Lokasi</a>
+                    <a href="#perawatan" class="text-sm text-gray-300 hover:text-cyan-400 transition">Tips Perawatan</a>
+                    <a href="#aksesoris" class="text-sm text-gray-300 hover:text-cyan-400 transition">Aksesoris & Setup</a>
+                    <a href="#faq" class="text-sm text-gray-300 hover:text-cyan-400 transition">FAQ</a>
+                    <a href="#kontak" class="text-sm text-gray-300 hover:text-cyan-400 transition">Contact</a>
+                </div>
+
+                <!-- Tombol Action Desktop -->
+                <div class="hidden md:block">
+                    <a href="#rekomendasi" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold px-5 py-2.5 rounded-xl text-sm transition shadow-lg shadow-cyan-500/20">
+                        Mulai Cek Spesifikasi
+                    </a>
+                </div>
+
+                <!-- Tombol Hamburger Mobile -->
+                <div class="lg:hidden flex items-center">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-300 hover:text-cyan-400 focus:outline-none p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown Menu Mobile -->
+        <div x-show="mobileMenuOpen" x-transition class="lg:hidden bg-cardBg border-b border-gray-800 px-6 py-6 space-y-4">
+            <a @click="mobileMenuOpen = false" href="#rekomendasi" class="block text-base text-gray-300 hover:text-cyan-400">Cari Rekomendasi</a>
+            <a @click="mobileMenuOpen = false" href="#lokasi" class="block text-base text-gray-300 hover:text-cyan-400">Cari Toko/Lokasi</a>
+            <a @click="mobileMenuOpen = false" href="#perawatan" class="block text-base text-gray-300 hover:text-cyan-400">Tips Perawatan</a>
+            <a @click="mobileMenuOpen = false" href="#aksesoris" class="block text-base text-gray-300 hover:text-cyan-400">Aksesoris & Setup</a>
+            <a @click="mobileMenuOpen = false" href="#faq" class="block text-base text-gray-300 hover:text-cyan-400">FAQ</a>
+            <a @click="mobileMenuOpen = false" href="#kontak" class="block text-base text-gray-300 hover:text-cyan-400">Contact</a>
+            <div class="pt-2">
+                <a @click="mobileMenuOpen = false" href="#rekomendasi" class="block text-center bg-cyan-500 text-black font-bold py-3 rounded-xl text-sm">
+                    Mulai Cek Spesifikasi
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION (Carousel dengan Foto Laptop & Bullet di Tengah) -->
+    <header class="pt-32 pb-20 px-4 relative overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10" x-data="{ activeSlide: 0, slides: [
+            { name: 'Acer Swift Go 14 AI', spec: 'Intel Core Ultra 7 155H | 32GB RAM | 2.8K OLED', brand: 'Acer', tag: 'Trending #1 (Coding & AI)', img: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80' },
+            { name: 'ASUS ROG Zephyrus G14', spec: 'AMD Ryzen 9 8945HS | RTX 4060 | 16GB RAM', brand: 'ASUS', tag: 'Trending #2 (Gaming & Creator)', img: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80' },
+            { name: 'Lenovo ThinkPad X1 Carbon', spec: 'Intel Core Ultra 7 | 16GB RAM | Ultra Lightweight', brand: 'Lenovo', tag: 'Trending #3 (Productivity & Office)', img: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=800&q=80' }
+        ], timer: null, init() { this.timer = setInterval(() => { this.activeSlide = (this.activeSlide + 1) % this.slides.length }, 4500) } }">
+            
+            <span class="inline-block py-1 px-4 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-semibold tracking-widest uppercase mb-6 neon-border">
+                Next-Gen Laptop Intelligence
+            </span>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-white">
+                Temukan Perangkat <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Masa Depanmu</span>
+            </h1>
+            <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto mb-10">
+                Sistem pintar pemilih spesifikasi, direktori toko fisik terdekat, dan panduan perawatan hardware dalam satu platform futuristik.
+            </p>
+
+            <!-- Carousel Box dengan Foto Laptop -->
+            <div class="bg-cardBg/90 backdrop-blur-xl neon-border rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-4 right-4 bg-cyan-500/20 text-cyan-300 text-xs px-3 py-1 rounded-full font-mono z-10" x-text="slides[activeSlide].tag"></div>
+                
+                <!-- Grid Konten & Foto Laptop -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center my-4">
+                    <!-- Foto Laptop -->
+                    <div class="relative overflow-hidden rounded-2xl border border-gray-800 bg-darkBg h-48 md:h-56">
+                        <img :src="slides[activeSlide].img" :alt="slides[activeSlide].name" class="w-full h-full object-cover opacity-90 hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent"></div>
+                    </div>
+                    <!-- Informasi Teks -->
+                    <div class="text-left flex flex-col justify-center">
+                        <span class="text-xs uppercase tracking-widest text-cyan-400 mb-1 font-mono" x-text="slides[activeSlide].brand"></span>
+                        <h2 class="text-xl md:text-2xl font-bold text-white mb-2" x-text="slides[activeSlide].name"></h2>
+                        <p class="text-gray-300 font-mono text-xs md:text-sm bg-darkBg/80 p-3 rounded-xl border border-gray-800" x-text="slides[activeSlide].spec"></p>
+                    </div>
+                </div>
+
+                <!-- Bullet Slides di Tengah -->
+                <div class="flex justify-center items-center gap-3 mt-6">
+                    <template x-for="(slide, index) in slides" :key="index">
+                        <button @click="activeSlide = index" 
+                                :class="activeSlide === index ? 'w-8 bg-cyan-400' : 'w-2.5 bg-gray-600'" 
+                                class="h-2.5 rounded-full transition-all duration-300 focus:outline-none">
+                        </button>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. MAIN SECTION -->
+    <main class="space-y-32 py-16">
+
+        <!-- Bagian 1: Alasan Harus Pandai Memilih -->
+        <section id="rekomendasi" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <span class="text-cyan-400 font-mono text-sm tracking-wider uppercase">// Analisis Pasar 2026</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-white leading-tight font-futuristic">
+                        Kenapa Harus Cermat Memilih Laptop di Era Komponen Mahal?
+                    </h2>
+                    <p class="text-gray-300 leading-relaxed text-base">
+                        Lonjakan harga komponen global membuat salah beli spesifikasi menjadi kesalahan fatal yang menguras dompet. Mahasiswa dan profesional dituntut memahami kecocokan antara beban kerja (*software*) dengan kapasitas RAM, jenis prosesor, serta sistem pendingin sebelum memutuskan membeli.
+                    </p>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-center gap-3">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 neon-glow"></span> Mencegah *bottleneck* performa saat multitasking berat.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 neon-glow"></span> Efisiensi anggaran jangka panjang untuk 4-5 tahun ke depan.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Gambar di Kanan dengan Shape Khusus -->
+                <div class="relative flex justify-center items-center">
+                    <div class="absolute w-72 h-72 md:w-96 md:h-96 bg-gradient-to-tr from-cyan-600/30 to-purple-600/30 rounded-3xl rotate-12 blur-2xl"></div>
+                    <div class="relative z-10 w-full max-w-md bg-cardBg neon-border rounded-3xl p-4 shadow-2xl overflow-hidden transform -rotate-2 hover:rotate-0 transition duration-500">
+                        <div class="bg-darkBg rounded-2xl p-6 border border-gray-800 text-center">
+                            <div class="text-5xl mb-4">💻⚡</div>
+                            <h3 class="text-lg font-bold text-white mb-2">Smart Hardware Matrix</h3>
+                            <p class="text-xs text-gray-400 mb-4">Algoritma SpecTive memetakan kebutuhan kuliah/kerja Anda ke dalam spesifikasi paling presisi.</p>
+                            <div class="bg-cyan-500/10 text-cyan-400 text-xs py-2 rounded-lg font-mono border border-cyan-500/30">
+                                Status: Sistem Rekomendasi Aktif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian 2: Info Tambahan (Direktori Toko & Search Bar Khusus) -->
+        <section id="lokasi" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-b from-cardBg to-darkBg neon-border rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="max-w-3xl mx-auto text-center relative z-10">
+                    <span class="text-cyan-400 font-mono text-xs uppercase tracking-widest">// Fitur Pencari Fisik</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-2 mb-4">Cek Lokasi Toko Laptop Terdekat</h2>
+                    <p class="text-gray-400 text-sm md:text-base mb-8">
+                        Bingung beli di mana? Masukkan nama kota atau area kampusmu untuk menemukan dealer resmi dan toko tepercaya.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+                        <input type="text" placeholder="Masukkan kota atau kecamatan (contoh: Malang)..." class="w-full bg-darkBg border border-gray-700 focus:border-cyan-400 text-white px-5 py-3.5 rounded-2xl outline-none text-sm focus:ring-1 focus:ring-cyan-400 transition">
+                        <button class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3.5 rounded-2xl text-sm transition shadow-lg shadow-cyan-500/20">
+                            Cari Toko
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian 3: Informasi Pendukung (Edukasi Perawatan & Aksesoris Penunjang) -->
+        <section id="perawatan" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-cyan-400 font-mono text-xs uppercase tracking-widest">// Ekosistem Keawetan Perangkat</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mt-2 mb-4">Edukasi & Perawatan Maksimal</h2>
+                <p class="text-gray-400 text-sm">Bukan sekadar membeli, pelajari cara merawat hardware agar performanya tetap stabil bertahun-tahun.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-cardBg neon-border rounded-3xl p-8 hover:border-cyan-400/80 transition duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl mb-6 neon-border">🔋</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Manajemen Kesehatan Baterai</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Biasakan mengaktifkan limit baterai di angka 80% jika laptop sering dicolok *charger* seharian. Ini mencegah degradasi sel kimiawi baterai agar tidak cepat kembung.
+                    </p>
+                    <span class="text-xs font-mono text-cyan-400">#HardwareMaintenance #BatteryLife</span>
+                </div>
+
+                <div id="aksesoris" class="bg-cardBg neon-border rounded-3xl p-8 hover:border-cyan-400/80 transition duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl mb-6 neon-border">⌨️</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Setup Ergonomis & Pendinginan</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Gunakan *laptop stand* untuk melancarkan sirkulasi udara bawah mesin dan kombinasikan dengan *keyboard external* demi menjaga keawetan tombol bawaan laptop dari debu dan tekanan berlebih.
+                    </p>
+                    <span class="text-xs font-mono text-cyan-400">#ErgonomicSetup #HardwareLongevity</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION FAQ -->
+        <section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8" x-data="{ selected: null }">
+            <div class="text-center mb-12">
+                <span class="text-cyan-400 font-mono text-xs uppercase tracking-widest">// Frequently Asked Questions</span>
+                <h2 class="text-3xl font-bold text-white mt-2">Pertanyaan Umum Seputar SpecTive</h2>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-cardBg neon-border rounded-2xl overflow-hidden transition">
+                    <button @click="selected !== 1 ? selected = 1 : selected = null" class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-white text-sm md:text-base">Apakah rekomendasi laptop di SpecTive akurat untuk mahasiswa Informatika?</span>
+                        <span class="text-cyan-400 font-bold transition-transform duration-300" :class="selected === 1 ? 'rotate-45' : ''">+</span>
+                    </button>
+                    <div x-show="selected === 1" x-collapse class="px-6 pb-4 text-gray-400 text-sm leading-relaxed border-t border-gray-800 pt-3">
+                        Sangat akurat. Sistem kami memfilter spesifikasi berdasarkan kebutuhan riil seperti kompilasi kode berat, penggunaan virtual machine, hingga pengembangan kecerdasan buatan (AI/ML).
+                    </div>
+                </div>
+
+                <div class="bg-cardBg neon-border rounded-2xl overflow-hidden transition">
+                    <button @click="selected !== 2 ? selected = 2 : selected = null" class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-white text-sm md:text-base">Bagaimana cara kerja fitur pencari lokasi toko laptop?</span>
+                        <span class="text-cyan-400 font-bold transition-transform duration-300" :class="selected === 2 ? 'rotate-45' : ''">+</span>
+                    </button>
+                    <div x-show="selected === 2" x-collapse class="px-6 pb-4 text-gray-400 text-sm leading-relaxed border-t border-gray-800 pt-3">
+                        Fitur ini mengindeks database mitra dealer resmi dan toko komputer terverifikasi di berbagai kota besar di Indonesia untuk memudahkan Anda mengecek stok fisik secara langsung.
+                    </div>
+                </div>
+
+                <div class="bg-cardBg neon-border rounded-2xl overflow-hidden transition">
+                    <button @click="selected !== 3 ? selected = 3 : selected = null" class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-white text-sm md:text-base">Apakah panduan perawatan perangkat di sini gratis?</span>
+                        <span class="text-cyan-400 font-bold transition-transform duration-300" :class="selected === 3 ? 'rotate-45' : ''">+</span>
+                    </button>
+                    <div x-show="selected === 3" x-collapse class="px-6 pb-4 text-gray-400 text-sm leading-relaxed border-t border-gray-800 pt-3">
+                        Ya, seluruh modul panduan perawatan hardware, tips baterai, dan rekomendasi aksesoris dapat diakses secara gratis oleh seluruh member terdaftar SpecTive.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CONTACT FORM -->
+        <section id="kontak" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-cardBg neon-border rounded-3xl p-8 md:p-12 shadow-2xl relative">
+                <div class="text-center mb-8">
+                    <span class="text-cyan-400 font-mono text-xs uppercase tracking-widest">// Hubungi Tim Kami</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mt-2">Kirim Pesan & Masukan</h2>
+                    <p class="text-gray-400 text-sm mt-1">Punya pertanyaan seputar spesifikasi atau kendala sistem? Sampaikan pada kami.</p>
+                </div>
+
+                <!-- Tambahkan event listener form submit -->
+                <form class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 uppercase tracking-wider mb-2">Nama Lengkap</label>
+                        <input type="text" placeholder="Masukkan nama Anda..." class="w-full bg-darkBg border border-gray-700 focus:border-cyan-400 text-white px-4 py-3 rounded-xl outline-none text-sm transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 uppercase tracking-wider mb-2">Pesan</label>
+                        <textarea rows="4" placeholder="Tuliskan pesan atau pertanyaan Anda di sini..." class="w-full bg-darkBg border border-gray-700 focus:border-cyan-400 text-white px-4 py-3 rounded-xl outline-none text-sm transition"></textarea>
+                    </div>
+                    <!-- Ubah type="button" menjadi type="submit" -->
+                    <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold py-3.5 px-6 rounded-xl transition shadow-lg shadow-cyan-500/20 text-sm cursor-pointer">
+                        Kirim Pesan
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 5. FOOTER -->
+    <footer class="bg-black/60 border-t border-gray-800 text-gray-400 py-12 px-4 mt-20">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div class="md:col-span-2 space-y-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-cyan-500 flex items-center justify-center text-black font-bold">S</div>
+                    <span class="font-bold text-xl text-white tracking-wider">SpecTive</span>
+                </div>
+                <p class="text-sm text-gray-400 max-w-sm leading-relaxed">
+                    Platform cerdas lintas fungsi untuk rekomendasi spesifikasi laptop, direktori toko, dan edukasi perawatan hardware berbasis web modern.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-4 tracking-wider uppercase">Navigasi Utama</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#rekomendasi" class="hover:text-cyan-400 transition">Cari Rekomendasi</a></li>
+                    <li><a href="#lokasi" class="hover:text-cyan-400 transition">Cari Toko/Lokasi</a></li>
+                    <li><a href="#perawatan" class="hover:text-cyan-400 transition">Tips Perawatan</a></li>
+                    <li><a href="#aksesoris" class="hover:text-cyan-400 transition">Aksesoris Laptop</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-4 tracking-wider uppercase">Legal & Akademik</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-cyan-400 transition">Kebijakan Privasi</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Syarat & Ketentuan</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Dokumentasi Tugas Besar</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 border-t border-gray-900 text-center text-xs text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 SpecTive. Hak Cipta Dilindungi Undang-Undang.</p>
+            <p>Developed with Tailwind CSS by <span class="text-cyan-400 font-medium">Alif</span></p>
+        </div>
+    </footer>
+    <script src="index.js"></script>
+
+</body>
+</html>
