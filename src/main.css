@@ -1,1 +1,25 @@
-@import url("tailwindcss");
+@import "tailwindcss";
+
+/* Mendaftarkan variabel warna kustom untuk Tailwind v4 */
+@theme {
+  --color-darkBg: #090D16;
+  --color-cardBg: #111827;
+  --color-accentCyan: #06B6D4;
+  --color-accentBlue: #3B82F6;
+  --color-neonPurple: #8B5CF6;
+  --font-futuristic: 'Inter', sans-serif;
+}
+
+/* Custom CSS tambahan */
+.neon-glow {
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.2);
+}
+
+.neon-border {
+  border: 1px solid rgba(6, 182, 212, 0.4);
+}
+
+.bg-grid-pattern {
+  background-image: radial-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
