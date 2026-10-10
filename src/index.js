@@ -1,14 +1,6 @@
-/**
- * SpecTive - Main JavaScript Interactivity & Dynamic UI
- * Author: Alif (Informatika UMM)
- */
-
 document.addEventListener('DOMContentLoaded', () => {
     console.log("SpecTive Interactive Engine Loaded 🚀");
 
-    // ==========================================
-    // 1. SISTEM NOTIFIKASI TOAST FUTURISTIK (Pengganti Alert)
-    // ==========================================
     function showToast(message, type = 'success') {
         const existingToast = document.getElementById('spective-toast');
         if (existingToast) existingToast.remove();
@@ -38,177 +30,162 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 
-    // ==========================================
-    // 2. FUNGSI TOMBOL KONTAK (Form Submission)
-    // ==========================================
-    const contactForm = document.querySelector('#kontak form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+    const searchLocationBtn = document.getElementById('lokasi-btn');
+    const searchLocationInput = document.getElementById('lokasi-input');
+    const resultsContainer = document.getElementById('lokasi-results');
 
-            const nameInput = this.querySelector('input[type="text"]');
-            const messageInput = this.querySelector('textarea');
-
-            if (!nameInput || !messageInput) return;
-
-            const name = nameInput.value.trim();
-            const message = messageInput.value.trim();
-
-            if (name === '' || message === '') {
-                showToast('Mohon isi nama dan pesan Anda terlebih dahulu!', 'error');
-                return;
-            }
-
-            showToast(`Terima kasih, ${name}! Pesan Anda telah dikirim ke sistem SpecTive.`);
-            this.reset();
-        });
-    }
-
-    // ==========================================
-    // 3. INTERAKTIF PENCARI TOKO (Dynamic Search Result)
-    // ==========================================
-    const searchLocationBtn = document.querySelector('#lokasi button');
-    const searchLocationInput = document.querySelector('#lokasi input');
-
-    if (searchLocationBtn && searchLocationInput) {
-        const resultsContainer = document.createElement('div');
-        resultsContainer.className = 'mt-4 space-y-2 text-left max-w-xl mx-auto';
-        searchLocationInput.parentNode.parentNode.appendChild(resultsContainer);
-
-        searchLocationBtn.addEventListener('click', () => {
-            const query = searchLocationInput.value.trim().toLowerCase();
-            
-            if (query === '') {
-                showToast('Masukkan nama kota atau wilayah terlebih dahulu.', 'error');
+    if (searchLocationBtn && searchLocationInput && resultsContainer) {
+        searchLocationBtn.addEventListener('click', async () => {
+            let city = searchLocationInput.value.trim();
+            if (city === '') {
+                showToast('Masukkan nama kota terlebih dahulu.', 'error');
                 searchLocationInput.focus();
                 resultsContainer.innerHTML = '';
                 return;
             }
 
-            showToast(`Mencari dealer resmi di area "${searchLocationInput.value}"...`);
+            // Normalisasi penulisan nama kota
+            city = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
+            showToast(`Melacak toko komputer asli di area "${city}"...`, 'success');
             
-            setTimeout(() => {
-                resultsContainer.innerHTML = `
-                    <div class="p-4 bg-darkBg border border-cyan-500/40 rounded-2xl animate-pulse">
-                        <p class="text-xs text-cyan-400 font-mono">// Hasil Pencarian untuk: ${searchLocationInput.value}</p>
-                        <div class="mt-2 space-y-2 text-xs text-gray-300">
-                            <div class="p-2.5 bg-cardBg rounded-xl border border-gray-800 flex justify-between items-center">
-                                <span>📍 <strong>SpecTive Store Official (${searchLocationInput.value})</strong> - Jl. Utama No. 45</span>
-                                <span class="text-green-400 font-mono">Buka (Stok Ready)</span>
-                            </div>
-                            <div class="p-2.5 bg-cardBg rounded-xl border border-gray-800 flex justify-between items-center">
-                                <span>📍 <strong>TechHub Partner Center</strong> - Mall Center Lt. 2</span>
-                                <span class="text-green-400 font-mono">Buka (Stok Ready)</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }, 600);
-        });
-    }
-
-    // ==========================================
-    // 4. EFEK INTERAKTIF KLIK TOMBOL NAVIGASI / HERO
-    // ==========================================
-    const ctaButtons = document.querySelectorAll('a[href="#rekomendasi"]');
-    ctaButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            console.log("Pengguna mengklik tombol eksplorasi rekomendasi.");
-        });
-    });
-
-    // ==========================================
-    // 5. FITUR BARU: FETCHING & DISPLAY DATA DARI API (Pertemuan 4)
-    // ==========================================
-    
-    // Inisialisasi Endpoint & Target Container DOM
-    const API_URL = "https://dummyjson.com/products/category/laptops";
-    const recommendationSection = document.querySelector('#rekomendasi');
-
-    if (recommendationSection) {
-        // Buat container wadah grid baru secara dinamis di section rekomendasi
-        const apiContainer = document.createElement('div');
-        apiContainer.id = 'api-laptop-list';
-        apiContainer.className = 'mt-12 grid grid-cols-1 md:grid-cols-3 gap-6';
-        recommendationSection.appendChild(apiContainer);
-
-        async function loadLaptopData() {
-            // --- TASK 03: HANDLE STATE - LOADING STATE ---
-            apiContainer.innerHTML = `
-                <div class="col-span-full flex flex-col items-center justify-center py-12 text-cyan-400">
-                    <svg class="animate-spin h-8 w-8 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                    </svg>
-                    <p class="font-mono text-sm">Mengambil rekomendasi data dari API...</p>
+            // UI Loading Animasi
+            resultsContainer.innerHTML = `
+                <div class="text-center text-slate-400 text-sm py-8 animate-pulse">
+                    <i class="fa-solid fa-satellite-dish fa-beat text-3xl text-sky-400 mb-3 block"></i>
+                    Memindai koordinat dan melacak titik toko nyata di satelit pemetaan...
                 </div>
             `;
 
             try {
-                // --- TASK 01: CONNECT TO API ---
-                const response = await fetch(API_URL);
+                // TAHAP 1: Cari Koordinat Kota (Geocoding)
+                const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(city)}&format=json&limit=1`);
+                const geoData = await geoRes.json();
 
-                if (!response.ok) {
-                    throw new Error(`HTTP Error! Status: ${response.status}`);
-                }
-
-                // Parsing JSON ke JavaScript Object
-                const data = await response.json();
-                const laptops = data.products || [];
-
-                // --- TASK 02: DISPLAY API DATA ---
-                if (laptops.length === 0) {
-                    apiContainer.innerHTML = `<p class="col-span-full text-center text-gray-400 font-mono">Tidak ada data laptop tersedia.</p>`;
+                if (geoData.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="p-5 bg-[#161e2e] border border-slate-700 rounded-xl text-center shadow-lg">
+                            <p class="text-sm text-slate-400">Kota <strong>${city}</strong> tidak ditemukan. Pastikan ejaan nama kota benar.</p>
+                        </div>
+                    `;
                     return;
                 }
 
-                apiContainer.innerHTML = ''; // Bersihkan loading indicator
+                const lat = geoData[0].lat;
+                const lon = geoData[0].lon;
 
-                // Render setiap item ke elemen HTML menggunakan Loop & Template Literals
-                laptops.slice(0, 6).forEach(laptop => {
-                    const laptopCard = `
-                        <div class="bg-cardBg neon-border rounded-2xl p-5 hover:border-cyan-400/80 transition duration-300 flex flex-col justify-between">
-                            <div>
-                                <img src="${laptop.thumbnail}" alt="${laptop.title}" class="w-full h-40 object-cover rounded-xl mb-4 border border-gray-800">
-                                <span class="text-xs uppercase tracking-widest text-cyan-400 font-mono">${laptop.brand || 'SpecTive'}</span>
-                                <h3 class="text-lg font-bold text-white mb-2">${laptop.title}</h3>
-                                <p class="text-gray-400 text-xs line-clamp-2 mb-4">${laptop.description}</p>
-                            </div>
-                            <div class="flex justify-between items-center border-t border-gray-800 pt-3 mt-2">
-                                <span class="text-cyan-400 font-bold font-mono">$${laptop.price}</span>
-                                <button class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500 hover:text-black font-semibold text-xs px-3 py-1.5 rounded-lg transition">
-                                    Lihat Specs
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    apiContainer.innerHTML += laptopCard;
-                });
-
-                showToast("Data rekomendasi laptop dari API berhasil dimuat!");
-
-            } catch (error) {
-                // --- TASK 03: HANDLE STATE - ERROR STATE ---
-                console.error("Fetch API Error:", error);
-
-                apiContainer.innerHTML = `
-                    <div class="col-span-full text-center py-8 bg-cardBg neon-border rounded-2xl p-6">
-                        <div class="text-red-400 text-4xl mb-2">⚠️</div>
-                        <h4 class="text-white font-bold mb-1">Gagal Memuat Data API</h4>
-                        <p class="text-gray-400 text-xs mb-4">${error.message}</p>
-                        <button id="retry-api-btn" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold text-xs px-4 py-2 rounded-xl hover:opacity-90 transition">
-                            Coba Lagi
-                        </button>
-                    </div>
+                // TAHAP 2: Cari Toko Komputer Sungguhan di Radius 10 KM
+                // Menggunakan Overpass QL (Query Language) untuk mengekstrak data node OSM
+                const overpassQuery = `
+                    [out:json][timeout:15];
+                    (
+                      node["shop"="computer"](around:10000, ${lat}, ${lon});
+                      way["shop"="computer"](around:10000, ${lat}, ${lon});
+                    );
+                    out center tags 5;
                 `;
 
-                // Re-bind listener untuk tombol Coba Lagi
-                document.querySelector('#retry-api-btn')?.addEventListener('click', loadLaptopData);
-                showToast("Gagal mengambil data dari server API.", "error");
-            }
-        }
+                const storeRes = await fetch('https://overpass-api.de/api/interpreter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `data=${encodeURIComponent(overpassQuery)}`
+                });
+                
+                const storeData = await storeRes.json();
 
-        // Panggil fungsi fetching data saat aplikasi dimuat
-        loadLaptopData();
+                if (!storeData.elements || storeData.elements.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="p-5 bg-[#161e2e] border border-slate-700 rounded-xl text-center shadow-lg">
+                            <p class="text-sm text-slate-400">Belum ada kontributor peta terbuka yang mendaftarkan lokasi toko komputer secara publik di radius kota <strong>${city}</strong>.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // TAHAP 3: Render Data Asli ke HTML
+                resultsContainer.innerHTML = storeData.elements.map((place, index) => {
+                    const name = place.tags.name || "Toko Komputer / Elektronik (Tanpa Nama)";
+                    const street = place.tags["addr:street"] || place.tags["addr:full"] || "Data detail jalan belum ditambahkan oleh pembuat peta";
+                    const website = place.tags.website ? `<a href="${place.tags.website}" target="_blank" class="text-sky-400 hover:underline">Kunjungi Website</a>` : "";
+                    
+                    return `
+                        <div class="p-4 bg-[#161e2e] border border-slate-700 hover:border-sky-500/50 rounded-xl transition-colors flex justify-between items-start gap-4 shadow-lg animate-in fade-in slide-in-from-bottom-4 duration-500" style="animation-delay: ${index * 150}ms">
+                            <div>
+                                <h4 class="text-sm font-bold text-sky-400 mb-1 flex items-center gap-2">
+                                    <i class="fa-solid fa-store"></i> ${name}
+                                </h4>
+                                <p class="text-xs text-slate-300 leading-relaxed pr-2 mb-1">
+                                    <i class="fa-solid fa-location-dot text-slate-500 mr-1"></i> ${street}
+                                </p>
+                                <p class="text-[10px] text-slate-500 font-mono">${website}</p>
+                            </div>
+                            <span class="text-[10px] font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-800/50 px-2 py-1 rounded whitespace-nowrap mt-1">
+                                <i class="fa-solid fa-check-circle mr-1"></i>Real Store
+                            </span>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error("Fetch Error:", error);
+                showToast('Gagal memproses koneksi satelit API.', 'error');
+                resultsContainer.innerHTML = `
+                    <div class="p-5 bg-[#161e2e] border border-red-500/30 rounded-xl text-center shadow-lg">
+                        <p class="text-sm text-red-400">Terjadi kesalahan pada server saat menarik data real-time.</p>
+                    </div>
+                `;
+            }
+        });
+        
+        searchLocationInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                searchLocationBtn.click();
+            }
+        });
+    }
+
+    const ctaButtons = document.querySelectorAll('a[href="#katalog"]');
+    ctaButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            console.log("Pengguna bernavigasi ke bagian katalog.");
+        });
+    });
+
+    const consultationForm = document.getElementById('consultation-form');
+    if (consultationForm) {
+        consultationForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const payload = {
+                name: document.getElementById('consult-name').value,
+                email: document.getElementById('consult-email').value,
+                message: document.getElementById('consult-message').value
+            };
+
+            console.log("Mengirim data konsultasi:", payload); 
+
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log("Respon API Server:", responseData); 
+                    
+                    showToast(`Terima kasih, ${payload.name}! Pesan konsultasi Anda telah berhasil disimpan.`, 'success');
+                    this.reset();
+                } else {
+                    console.error("Gagal mengirim:", response.statusText);
+                    showToast('Terjadi kesalahan saat mengirim pesan.', 'error');
+                }
+            } catch (error) {
+                console.error("Network Error:", error); 
+                showToast('Gagal terhubung ke server.', 'error');
+            }
+        });
     }
 });
