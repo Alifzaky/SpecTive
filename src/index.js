@@ -90,6 +90,11 @@ function renderLaptops(products) {
           <p class="text-xs text-slate-400 mb-4 line-clamp-2 flex-grow">${product.description}</p>
           <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between mt-auto">
             <div><span class="text-lg font-extrabold text-sky-400">$${product.price}</span></div>
+            <div class="flex items-center gap-2">
+              <label class="text-[10px] text-slate-400 flex items-center gap-1 cursor-pointer bg-slate-900 px-2.5 py-2 rounded-lg border border-slate-800 hover:border-sky-500">
+                <input type="checkbox" value="${product.id}" onchange="toggleCompare(${product.id}, this)" class="accent-sky-500">
+                <span>Bandingkan</span>
+              </label>
             <button onclick="openModal(${product.id})" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors">Detail</button>
           </div>
         </div>
@@ -344,3 +349,135 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// =========================================================================
+// LOGIKA FITUR TAMBAHAN (Advanced Filter, Comparison, Glossary)
+// =========================================================================
+
+let selectedCompareIds = [];
+
+// 1. Advanced Filter Handler
+function triggerCustomFilters() {
+  const keyword = document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase() : '';
+  const category = document.getElementById('filter-category').value;
+  const ram = document.getElementById('filter-ram').value;
+  const priceRange = document.getElementById('filter-price').value;
+
+  let filtered = allProducts;
+
+  if (activeBrandFilter !== 'all') {
+    filtered = filtered.filter(p => (p.brand || '').toLowerCase() === activeBrandFilter.toLowerCase());
+  }
+
+  if (keyword) {
+    filtered = filtered.filter(p => p.title.toLowerCase().includes(keyword) || (p.description && p.description.toLowerCase().includes(keyword)));
+  }
+
+  if (category !== 'all') {
+    filtered = filtered.filter(p => {
+      const text = (p.title + ' ' + p.description).toLowerCase();
+      if (category === 'gaming') return text.includes('gaming') || text.includes('rtx') || text.includes('zephyrus');
+      if (category === 'creator') return text.includes('creator') || text.includes('pro') || text.includes('oled') || text.includes('touchscreen');
+      if (category === 'coding') return text.includes('thinkpad') || text.includes('engineering') || text.includes('developer');
+      if (category === 'office') return text.includes('carbon') || text.includes('yoga') || text.includes('harian') || text.includes('kuliah');
+      return true;
+    });
+  }
+
+  if (ram !== 'all') {
+    filtered = filtered.filter(p => {
+      const specText = (p.specs || p.title || '').toLowerCase();
+      return specText.includes(ram + 'gb');
+    });
+  }
+
+  if (priceRange !== 'all') {
+    filtered = filtered.filter(p => {
+      if (priceRange === 'low') return p.price < 1000;
+      if (priceRange === 'mid') return p.price >= 1000 && p.price <= 1800;
+      if (priceRange === 'high') return p.price > 1800;
+      return true;
+    });
+  }
+
+  renderLaptops(filtered);
+}
+
+// 2. Side-by-Side Comparison Logic
+function toggleCompare(productId, checkbox) {
+  if (checkbox.checked) {
+    if (selectedCompareIds.length >= 3) {
+      showToast('Maksimal 3 laptop untuk dibandingkan secara bersamaan!', 'error');
+      checkbox.checked = false;
+      return;
+    }
+    if (!selectedCompareIds.includes(productId)) {
+      selectedCompareIds.push(productId);
+    }
+  } else {
+    selectedCompareIds = selectedCompareIds.filter(id => id !== productId);
+  }
+
+  updateComparisonBar();
+}
+
+function updateComparisonBar() {
+  const bar = document.getElementById('comparison-bar');
+  const countEl = document.getElementById('compare-count');
+  
+  if (selectedCompareIds.length > 0) {
+    bar.classList.remove('hidden');
+    countEl.textContent = `${selectedCompareIds.length} Laptop Dipilih`;
+  } else {
+    bar.classList.add('hidden');
+  }
+}
+
+function clearComparison() {
+  selectedCompareIds = [];
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  updateComparisonBar();
+}
+
+function openComparisonModal() {
+  if (selectedCompareIds.length === 0) return;
+  const container = document.getElementById('comparison-content');
+  
+  const comparedProducts = selectedCompareIds.map(id => allProducts.find(p => p.id === id)).filter(Boolean);
+
+  container.innerHTML = comparedProducts.map(product => `
+    <div class="bg-[#0b0f19] border border-slate-800 p-4 rounded-xl space-y-3 flex flex-col justify-between">
+      <div class="space-y-2">
+        <img src="${product.thumbnail}" alt="${product.title}" class="w-full h-32 object-contain bg-slate-900 rounded-lg p-2">
+        <span class="text-[10px] font-bold uppercase text-sky-400 bg-sky-950 px-2 py-0.5 rounded">${product.brand || 'Laptop'}</span>
+        <h4 class="text-sm font-bold text-white">${product.title}</h4>
+        <p class="text-base font-extrabold text-sky-400">$${product.price}</p>
+      </div>
+      <div class="border-t border-slate-800 pt-3 space-y-2 text-xs text-slate-300">
+        <p><strong>Spesifikasi:</strong> ${product.specs || 'Standar 16GB RAM'}</p>
+        <p class="text-slate-400"><strong>Deskripsi:</strong> ${product.description}</p>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('comparison-modal').classList.remove('hidden');
+}
+
+function closeComparisonModal() {
+  document.getElementById('comparison-modal').classList.add('hidden');
+}
+
+// 3. Glossary Search Handler
+function filterGlossary() {
+  const query = document.getElementById('glossary-search').value.toLowerCase();
+  const items = document.querySelectorAll('.glossary-item');
+
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    if (text.includes(query)) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
