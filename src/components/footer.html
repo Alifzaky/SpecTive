@@ -1,0 +1,30 @@
+<!-- FOOTER SECTION -->
+<footer class="border-t border-slate-200 dark:border-slate-800/80 bg-slate-100 dark:bg-[#070a11] mt-10 sm:mt-20 text-slate-600 dark:text-slate-400 text-sm transition-colors duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+    <div class="space-y-4 md:col-span-1">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center font-extrabold text-slate-950 text-base">S</div>
+        <span class="font-extrabold text-lg text-slate-900 dark:text-white tracking-wide">SpecTive</span>
+      </div>
+      <p class="text-slate-500 dark:text-slate-500 leading-relaxed text-xs">Platform pembanding spesifikasi dan rekomendasi laptop terpercaya untuk mahasiswa, profesional, dan gamer.</p>
+    </div>
+    <div class="space-y-3">
+      <h4 class="font-bold text-slate-800 dark:text-slate-200 text-xs uppercase tracking-wider">Navigasi</h4>
+      <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+        <li><a href="#katalog" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Katalog Laptop</a></li>
+        <li><a href="#edukasi" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Tips & Edukasi</a></li>
+        <li><a href="#lokasi" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Cari Toko Offline</a></li>
+      </ul>
+    </div>
+    <div class="space-y-3">
+      <h4 class="font-bold text-slate-800 dark:text-slate-200 text-xs uppercase tracking-wider">Ikuti Kami</h4>
+      <div class="flex items-center gap-3">
+        <a href="#" class="w-9 h-9 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-sky-500 dark:hover:text-sky-400 hover:border-sky-500/50 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="w-9 h-9 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-sky-500 dark:hover:text-sky-400 hover:border-sky-500/50 transition-colors"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-slate-200 dark:border-slate-800/60 py-5 text-center text-xs text-slate-500">
+    &copy; 2026 SpecTive Platform. All rights reserved.
+  </div>
+</footer>
