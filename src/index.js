@@ -2,7 +2,7 @@
 // 1. GLOBAL VARIABLES & STATE
 // ==========================================
 const API_URL = 'https://dummyjson.com/products/category/laptops';
-let allProducts = [];
+// let allProducts = [];
 let activeBrandFilter = 'all';
 let selectedCompareIds = [];
 
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadComponent('navbar-container', './components/navbar.html');
     await loadComponent('footer-container', './components/footer.html');
 
-    fetchLaptops();
+    // fetchLaptops();
     initEventListeners();
     initScrollSpy();
 });
