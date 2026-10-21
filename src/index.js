@@ -1,17 +1,9 @@
 // ==========================================
 // 1. GLOBAL VARIABLES & STATE
 // ==========================================
-const API_URL = 'https://dummyjson.com/products/category/laptops';
 // let allProducts = [];
 let activeBrandFilter = 'all';
 let selectedCompareIds = [];
-
-const extraLaptops = [
-  { id: 101, title: "Apple MacBook Pro 14 Inch M3 Pro", brand: "Apple", price: 1999.99, rating: 4.9, thumbnail: "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png", description: "Laptop kencang untuk kebutuhan video editing 4K, software engineering, dan desain profesional.", specs: "18GB RAM | 512GB SSD" },
-  { id: 102, title: "Asus ROG Zephyrus G16 Gaming", brand: "Asus", price: 2199.00, rating: 4.8, thumbnail: "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png", description: "Laptop gaming ultra-thin dengan layar OLED 240Hz dan kartu grafis RTX seri terbaru.", specs: "32GB RAM | 1TB SSD" },
-  { id: 103, title: "Lenovo ThinkPad X1 Carbon Gen 11", brand: "Lenovo", price: 1649.50, rating: 4.7, thumbnail: "https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/thumbnail.png", description: "Standar industri laptop bisnis dengan ketahanan militer dan keyboard terbaik di kelasnya.", specs: "16GB RAM | 512GB SSD" },
-  { id: 104, title: "Dell XPS 15 9530 Creator Edition", brand: "Dell", price: 1899.99, rating: 4.6, thumbnail: "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/thumbnail.png", description: "Layar InfinityEdge 3.5K Touchscreen dengan kekuatan prosesor Intel Core i9.", specs: "32GB RAM | 1TB SSD" }
-];
 
 
 // ==========================================
@@ -20,8 +12,6 @@ const extraLaptops = [
 document.addEventListener('DOMContentLoaded', async () => {
     await loadComponent('navbar-container', './components/navbar.html');
     await loadComponent('footer-container', './components/footer.html');
-
-    // fetchLaptops();
     initEventListeners();
     initScrollSpy();
 });
@@ -100,22 +90,6 @@ function setupThemeToggle() {
     }
 }
 
-
-// ==========================================
-// 4. API FETCH & LAPTOP RENDERING
-// ==========================================
-async function fetchLaptops() {
-  try {
-    const response = await fetch(API_URL);
-    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-    const data = await response.json();
-    allProducts = [...data.products, ...extraLaptops];
-    renderLaptops(allProducts);
-  } catch (error) {
-    allProducts = extraLaptops;
-    renderLaptops(allProducts);
-  }
-}
 
 function renderLaptops(products) {
   const gridContainer = document.getElementById('laptop-grid');

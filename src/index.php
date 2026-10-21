@@ -1,108 +1,68 @@
 <?php
 // ==========================================
-// 1. PHP VARIABLE & ARRAY (Data Server-Side)
+// 1. 
 // ==========================================
+class Laptop implements JsonSerializable {    
+  private $id;
+    private $title;
+    private $brand;
+    private $price;
+    private $thumbnail;
+    private $description;
+    private $specs;
+    private $status;
+
+    // Constructor untuk inisiasi pengisian data saat objek dibuat
+    public function __construct($id, $title, $brand, $price, $thumbnail, $description, $specs, $status) {
+        $this->id = $id;
+        $this->title = $title;
+        $this->brand = $brand;
+        $this->price = $price;
+        $this->thumbnail = $thumbnail;
+        $this->description = $description;
+        $this->specs = $specs;
+        $this->status = $status;
+    }
+
+    // ==========================================
+    // GETTER METHODS (Untuk menampilkan data private)
+    // ==========================================
+    public function getId() { return $this->id; }
+    public function getTitle() { return $this->title; }
+    public function getBrand() { return $this->brand; }
+    public function getPrice() { return $this->price; }
+    public function getThumbnail() { return $this->thumbnail; }
+    public function getDescription() { return $this->description; }
+    public function getSpecs() { return $this->specs; }
+    public function getStatus() { return $this->status; }
+    // Memindahkan fungsi format price ke dalam class (Method)
+    public function getFormattedPrice() {
+        return "$" . number_format($this->price, 2, '.', ',');
+    }
+    public function jsonSerialize():mixed {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'brand' => $this->brand,
+            'price' => $this->price,
+            'thumbnail' => $this->thumbnail,
+            'description' => $this->description,
+            'specs' => $this->specs,
+            'status' => $this->status
+        ];
+    }
+}
 $laptops = [
-    [
-        "id" => 101,
-        "title" => "Apple MacBook Pro 14 Inch M3 Pro",
-        "brand" => "Apple",
-        "price" => 1999.99,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png",
-        "description" => "Laptop kencang untuk kebutuhan video editing 4K, software engineering, dan desain profesional.",
-        "specs" => "18GB RAM | 512GB SSD",
-        "status" => "Tersedia"
-    ],
-    [
-        "id" => 102,
-        "title" => "Asus ROG Zephyrus G16 Gaming",
-        "brand" => "Asus",
-        "price" => 2199.00,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png",
-        "description" => "Laptop gaming ultra-thin dengan layar OLED 240Hz dan kartu grafis RTX seri terbaru.",
-        "specs" => "32GB RAM | 1TB SSD",
-        "status" => "Pre-Order"
-    ],
-    [
-        "id" => 103,
-        "title" => "Lenovo ThinkPad X1 Carbon Gen 11",
-        "brand" => "Lenovo",
-        "price" => 1649.50,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/thumbnail.png",
-        "description" => "Standar industri laptop bisnis dengan ketahanan militer dan keyboard terbaik di kelasnya.",
-        "specs" => "16GB RAM | 512GB SSD",
-        "status" => "Tersedia"
-    ],
-    [
-        "id" => 104,
-        "title" => "Dell XPS 15 9530 Creator Edition",
-        "brand" => "Dell",
-        "price" => 1899.99,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/thumbnail.png",
-        "description" => "Layar InfinityEdge 3.5K Touchscreen dengan kekuatan prosesor Intel Core i9.",
-        "specs" => "32GB RAM | 1TB SSD",
-        "status" => "Habis"
-    ],
-    [
-        "id" => 105,
-        "title" => "Acer Swift Go 14 AI",
-        "brand" => "Acer",
-        "price" => 1199.00,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png", 
-        "description" => "Laptop tipis bertenaga AI dengan sistem pendingin kipas ganda dan layar OLED warna akurat.",
-        "specs" => "32GB RAM | Intel Core Ultra 7",
-        "status" => "Tersedia"
-    ],
-    [
-        "id" => 106,
-        "title" => "HP Spectre x360 14",
-        "brand" => "HP",
-        "price" => 1499.50,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/thumbnail.png",
-        "description" => "Laptop 2-in-1 premium dengan desain elegan dan baterai tahan seharian penuh.",
-        "specs" => "16GB RAM | 1TB SSD",
-        "status" => "Pre-Order"
-    ],
-    [
-        "id" => 107,
-        "title" => "MSI Stealth 16 Studio",
-        "brand" => "MSI",
-        "price" => 1750.00,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png",
-        "description" => "Kombinasi sempurna antara performa gaming dan tampilan profesional untuk studio kreatif.",
-        "specs" => "32GB RAM | RTX 4070",
-        "status" => "Tersedia"
-    ],
-    [
-        "id" => 108,
-        "title" => "Huawei MateBook X Pro 2024",
-        "brand" => "Huawei",
-        "price" => 1599.00,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/thumbnail.png",
-        "description" => "Bodi magnesium super ringan dengan rasio layar-ke-bodi tertinggi di kelasnya.",
-        "specs" => "16GB RAM | 1TB NVMe",
-        "status" => "Habis"
-    ],
-    [
-        "id" => 109,
-        "title" => "Razer Blade 15 Advanced",
-        "brand" => "Razer",
-        "price" => 2499.99,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png",
-        "description" => "Sasis aluminium CNC dengan performa gaming kelas berat tanpa kompromi.",
-        "specs" => "32GB RAM | 240Hz QHD",
-        "status" => "Tersedia"
-    ],
-    [
-        "id" => 110,
-        "title" => "Gigabyte AERO 14 OLED",
-        "brand" => "Gigabyte",
-        "price" => 1349.00,
-        "thumbnail" => "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/thumbnail.png",
-        "description" => "Dikalibrasi khusus dari pabrik untuk akurasi warna mutlak bagi pekerja industri kreatif.",
-        "specs" => "16GB RAM | RTX 4050",
-        "status" => "Tersedia"
-    ]
+    new Laptop(101, "Apple MacBook Pro 14 Inch M3 Pro", "Apple", 1999.99, "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png", "Laptop kencang untuk kebutuhan video editing 4K, software engineering, dan desain profesional.", "18GB RAM | 512GB SSD", "Tersedia"),
+    new Laptop(102, "Asus ROG Zephyrus G16 Gaming", "Asus", 2199.00, "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png", "Laptop gaming ultra-thin dengan layar OLED 240Hz dan kartu grafis RTX seri terbaru.", "32GB RAM | 1TB SSD", "Pre-Order"),
+    new Laptop(103, "Lenovo ThinkPad X1 Carbon Gen 11", "Lenovo", 1649.50, "https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/thumbnail.png", "Standar industri laptop bisnis dengan ketahanan militer dan keyboard terbaik di kelasnya.", "16GB RAM | 512GB SSD", "Tersedia"),
+    new Laptop(104, "Dell XPS 15 9530 Creator Edition", "Dell", 1899.99, "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/thumbnail.png", "Layar InfinityEdge 3.5K Touchscreen dengan kekuatan prosesor Intel Core i9.", "32GB RAM | 1TB SSD", "Habis"),
+    new Laptop(105, "Acer Swift Go 14 AI", "Acer", 1199.00, "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png", "Laptop tipis bertenaga AI dengan sistem pendingin kipas ganda dan layar OLED warna akurat.", "32GB RAM | Intel Core Ultra 7", "Tersedia"),
+    new Laptop(106, "HP Spectre x360 14", "HP", 1499.50, "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/thumbnail.png", "Laptop 2-in-1 premium dengan desain elegan dan baterai tahan seharian penuh.", "16GB RAM | 1TB SSD", "Pre-Order"),
+    new Laptop(107, "MSI Stealth 16 Studio", "MSI", 1750.00, "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png", "Kombinasi sempurna antara performa gaming dan tampilan profesional untuk studio kreatif.", "32GB RAM | RTX 4070", "Tersedia"),
+    new Laptop(108, "Huawei MateBook X Pro 2024", "Huawei", 1599.00, "https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/thumbnail.png", "Bodi magnesium super ringan dengan rasio layar-ke-bodi tertinggi di kelasnya.", "16GB RAM | 1TB NVMe", "Habis"),
+    new Laptop(109, "Razer Blade 15 Advanced", "Razer", 2499.99, "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png", "Sasis aluminium CNC dengan performa gaming kelas berat tanpa kompromi.", "32GB RAM | 240Hz QHD", "Tersedia"),
+    new Laptop(110, "Gigabyte AERO 14 OLED", "Gigabyte", 1349.00, "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/thumbnail.png", "Dikalibrasi khusus dari pabrik untuk akurasi warna mutlak bagi pekerja industri kreatif.", "16GB RAM | RTX 4050", "Tersedia")
 ];
 
 // ==========================================
@@ -119,7 +79,7 @@ function formatPrice($price) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SpecTive - Platform Rekomendasi Laptop (PHP Version)</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="output.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -231,7 +191,7 @@ function formatPrice($price) {
             <input type="text" id="search-input" placeholder="Cari laptop, brand..." class="w-full bg-white dark:bg-[#161e2e] border border-slate-300 dark:border-slate-700/80 text-sm text-slate-900 dark:text-slate-200 pl-9 pr-3 py-2.5 rounded-lg focus:outline-none focus:border-sky-500 transition-all" />
           </div>
           <span id="product-count" class="text-xs font-semibold text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800/60 px-4 py-2.5 rounded-lg text-center whitespace-nowrap">
-            Memuat <?= count($laptops) ?> Laptop
+            Memuat <?= count($laptops) ?>   
           </span>
         </div>
       </div>
@@ -285,11 +245,11 @@ function formatPrice($price) {
           <article class="group bg-white dark:bg-[#161e2e] border border-slate-200 dark:border-slate-800/90 hover:border-sky-500/60 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 flex flex-col shadow-sm">
             
             <div class="w-full h-48 bg-slate-100 dark:bg-[#0f172a] p-4 flex items-center justify-center relative">
-              <img src="<?= $laptop['thumbnail'] ?>" alt="<?= $laptop['title'] ?>" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+              <img src="<?= $laptop->getThumbnail() ?>" alt="<?= $laptop->getTitle() ?>" class="max-h-full object-contain group-hover:scale-105 transition-transform duration-300" />
               
-              <?php if ($laptop['status'] === "Tersedia") : ?>
+              <?php if ($laptop->getStatus() === "Tersedia") : ?>
                   <span class="absolute top-2 right-2 text-[10px] font-bold bg-emerald-500 text-white px-2 py-1 rounded">Ready</span>
-              <?php elseif ($laptop['status'] === "Pre-Order") : ?>
+              <?php elseif ($laptop->getStatus() === "Pre-Order") : ?>
                   <span class="absolute top-2 right-2 text-[10px] font-bold bg-sky-500 text-white px-2 py-1 rounded">PO</span>
               <?php else : ?>
                   <span class="absolute top-2 right-2 text-[10px] font-bold bg-red-500 text-white px-2 py-1 rounded">Habis</span>
@@ -298,21 +258,21 @@ function formatPrice($price) {
 
             <div class="p-5 flex flex-col flex-grow">
               <div class="flex justify-between mb-1.5">
-                <span class="text-[10px] font-bold text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 px-2 rounded"><?= $laptop['brand'] ?></span>
-                <span class="text-[10px] text-slate-500 font-mono"><?= $laptop['specs'] ?></span>
+                <span class="text-[10px] font-bold text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 px-2 rounded"><?= $laptop->getBrand() ?></span>
+                <span class="text-[10px] text-slate-500 font-mono"><?= $laptop->getSpecs() ?></span>
               </div>
-              <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2 line-clamp-2"><?= $laptop['title'] ?></h3>
-              <p class="text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-2 flex-grow"><?= $laptop['description'] ?></p>
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2 line-clamp-2"><?= $laptop->getTitle() ?></h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-2 flex-grow"><?= $laptop->getDescription() ?></p>
               
               <div class="pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between mt-auto">
-                <span class="text-lg font-extrabold text-sky-600 dark:text-sky-400"><?= formatPrice($laptop['price']) ?></span>
+                <span class="text-lg font-extrabold text-sky-600 dark:text-sky-400"><?= formatPrice($laptop->getPrice()) ?></span>
                 
                 <!-- Tombol interaksi JS (Bandingkan & Detail) -->
                 <div class="flex gap-2">
                     <label class="text-[10px] text-slate-600 dark:text-slate-400 flex items-center gap-1 cursor-pointer bg-slate-50 dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800 hover:border-sky-500">
-                        <input type="checkbox" value="<?= $laptop['id'] ?>" onchange="toggleCompare(<?= $laptop['id'] ?>, this)" class="accent-sky-500"> VS
+                        <input type="checkbox" value="<?= $laptop->getId() ?>" onchange="toggleCompare(<?= $laptop->getId() ?>, this)" class="accent-sky-500"> VS
                     </label>
-                    <button onclick="openModal(<?= $laptop['id'] ?>)" class="bg-sky-600 hover:bg-sky-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-colors">Detail</button>
+                    <button onclick="openModal(<?= $laptop->getId() ?>)" class="bg-sky-600 hover:bg-sky-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-colors">Detail</button>
                 </div>
               </div>
             </div>
