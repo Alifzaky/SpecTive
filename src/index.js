@@ -1,61 +1,19 @@
 // ==========================================
 // 1. GLOBAL VARIABLES & STATE
 // ==========================================
-let allProducts = [];
+// let allProducts = [];
 let activeBrandFilter = 'all';
 let selectedCompareIds = [];
 
-// Fallback Data jika API eksternal gagal dijangkau
-const mockLaptops = [
-    {
-        id: 101,
-        title: "Apple MacBook Pro 14 Inch M3 Pro",
-        brand: "Apple",
-        price: 1999.99,
-        thumbnail: "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png",
-        description: "Laptop kencang untuk kebutuhan video editing 4K, software engineering, dan desain profesional.",
-        specs: "18GB RAM | 512GB SSD"
-    },
-    {
-        id: 102,
-        title: "Asus ROG Zephyrus G16 Gaming",
-        brand: "Asus",
-        price: 2199.00,
-        thumbnail: "https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png",
-        description: "Laptop gaming ultra-thin dengan layar OLED 240Hz dan kartu grafis RTX seri terbaru.",
-        specs: "32GB RAM | 1TB SSD"
-    },
-    {
-        id: 103,
-        title: "Lenovo ThinkPad X1 Carbon Gen 11",
-        brand: "Lenovo",
-        price: 1649.50,
-        thumbnail: "https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/thumbnail.png",
-        description: "Standar industri laptop bisnis dengan ketahanan militer dan keyboard terbaik di kelasnya.",
-        specs: "16GB RAM | 512GB SSD"
-    },
-    {
-        id: 104,
-        title: "Dell XPS 15 9530 Creator Edition",
-        brand: "Dell",
-        price: 1899.99,
-        thumbnail: "https://cdn.dummyjson.com/products/images/laptops/New%20DELL%20XPS%2013%209300%20Laptop/thumbnail.png",
-        description: "Layar InfinityEdge 3.5K Touchscreen dengan kekuatan prosesor Intel Core i9.",
-        specs: "32GB RAM | 1TB SSD"
-    }
-];
 
 // ==========================================
-// 2. INITIALIZATION & DATA FETCHING
+// 2. INITIALIZATION & COMPONENT LOADER
 // ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
     await loadComponent('navbar-container', './components/navbar.html');
     await loadComponent('footer-container', './components/footer.html');
     initEventListeners();
     initScrollSpy();
-    
-    // Panggil Fetch API sesuai materi Pertemuan 4
-    await fetchLaptops();
 });
 
 async function loadComponent(id, file) {
@@ -68,109 +26,24 @@ async function loadComponent(id, file) {
     }
 }
 
-// Implementasi Fetch API, Async/Await, Loading State & Error Handling
-async function fetchLaptops() {
-    const gridContainer = document.getElementById('laptop-grid');
-    const productCountEl = document.getElementById('product-count');
-
-    // 1. Loading State
-    gridContainer.innerHTML = `
-        <div class="col-span-full py-16 text-center text-slate-500">
-            <i class="fa-solid fa-spinner fa-spin text-3xl text-sky-500 mb-3"></i>
-            <p>Mengambil data laptop dari API...</p>
-        </div>
-    `;
-    productCountEl.textContent = 'Memuat Data...';
-
-    try {
-        // 2. Request Data ke Endpoint API
-        const response = await fetch('https://dummyjson.com/products/category/laptops');
-        
-        if (!response.ok) {
-            throw new Error('Gagal mengambil data dari server');
-        }
-
-        const data = await response.json();
-        
-        // Format dan petakan data API
-        allProducts = data.products.map(item => ({
-            id: item.id,
-            title: item.title,
-            brand: item.brand || 'Laptop',
-            price: item.price,
-            thumbnail: item.thumbnail,
-            description: item.description,
-            specs: '16GB RAM | 512GB SSD'
-        }));
-
-        renderLaptops(allProducts);
-    } catch (error) {
-        console.warn('Gagal memuat API eksternal. Menggunakan data cadangan...', error);
-        
-        // 3. Error Handling & Fallback
-        allProducts = mockLaptops;
-        renderLaptops(allProducts);
-        showToast('Menggunakan data sampel lokal', 'error');
-    }
-}
 
 // ==========================================
-// 3. RENDER DATA TO DOM
-// ==========================================
-function renderLaptops(products) {
-    const gridContainer = document.getElementById('laptop-grid');
-    const productCountEl = document.getElementById('product-count');
-
-    if (!products || products.length === 0) {
-        productCountEl.textContent = '0 Laptop Found';
-        gridContainer.innerHTML = `
-            <div class="col-span-full py-16 text-center text-slate-500 bg-white dark:bg-[#161e2e]/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
-                <p>Tidak ada produk laptop yang cocok.</p>
-            </div>`;
-        return;
-    }
-    
-    productCountEl.textContent = `Menampilkan ${products.length} Laptop`;
-    
-    // Alur Data ke Tampilan DOM (Render Data ke HTML)
-    gridContainer.innerHTML = products.map(product => `
-        <article class="group bg-white dark:bg-[#161e2e] border border-slate-200 dark:border-slate-800/90 hover:border-sky-500/60 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between shadow-sm">
-          <div class="w-full h-48 bg-slate-100 dark:bg-[#0f172a] p-4 flex items-center justify-center relative overflow-hidden">
-            <img src="${product.thumbnail}" alt="${product.title}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" />
-          </div>
-          <div class="p-5 flex flex-col flex-grow">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-900/60 px-2 py-0.5 rounded">${product.brand || 'Laptop'}</span>
-              <span class="text-[10px] text-slate-500 dark:text-slate-400 font-mono">${product.specs || "16GB RAM | 512GB SSD"}</span>
-            </div>
-            <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2 line-clamp-2">${product.title}</h3>
-            <p class="text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-2 flex-grow">${product.description}</p>
-            <div class="pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between mt-auto">
-              <span class="text-lg font-extrabold text-sky-600 dark:text-sky-400">$${product.price}</span>
-              <div class="flex items-center gap-2">
-                <label class="text-[10px] text-slate-600 dark:text-slate-400 flex items-center gap-1 cursor-pointer bg-slate-50 dark:bg-slate-900 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <input type="checkbox" value="${product.id}" onchange="toggleCompare(${product.id}, this)" class="accent-sky-500">
-                  <span>Bandingkan</span>
-                </label>
-                <button onclick="openModal(${product.id})" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors">Detail</button>
-              </div>
-            </div>
-          </div>
-        </article>
-    `).join('');
-}
-
-// ==========================================
-// 4. EVENT LISTENERS & UI INTERACTIONS
+// 3. EVENT LISTENERS & UI INTERACTIONS
 // ==========================================
 function initEventListeners() {
+    // Search Filter
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => applyFilters(e.target.value.toLowerCase(), activeBrandFilter));
     }
 
-    setupMobileMenu();
-    setupThemeToggle();
+    // Mobile Menu & Theme Toggle (Diload setelah komponen Navbar siap)
+    setTimeout(() => {
+        setupMobileMenu();
+        setupThemeToggle();
+    }, 100);
+
+    // Location Search & Consultation Form
     setupLocationSearch();
     setupConsultationForm();
 }
@@ -216,6 +89,46 @@ function setupThemeToggle() {
         });
     }
 }
+
+
+function renderLaptops(products) {
+  const gridContainer = document.getElementById('laptop-grid');
+  const productCountEl = document.getElementById('product-count');
+
+  if (!products || products.length === 0) {
+    productCountEl.textContent = '0 Laptop Found';
+    gridContainer.innerHTML = `<div class="col-span-full py-16 text-center text-slate-500 bg-white dark:bg-[#161e2e]/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6"><p>Tidak ada produk laptop yang cocok.</p></div>`;
+    return;
+  }
+  
+  productCountEl.textContent = `Menampilkan ${products.length} Laptop`;
+  gridContainer.innerHTML = products.map(product => `
+    <article class="group bg-white dark:bg-[#161e2e] border border-slate-200 dark:border-slate-800/90 hover:border-sky-500/60 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between shadow-sm">
+      <div class="w-full h-48 bg-slate-100 dark:bg-[#0f172a] p-4 flex items-center justify-center relative overflow-hidden">
+        <img src="${product.thumbnail}" alt="${product.title}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+      </div>
+      <div class="p-5 flex flex-col flex-grow">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-900/60 px-2 py-0.5 rounded">${product.brand || 'Laptop'}</span>
+          <span class="text-[10px] text-slate-500 dark:text-slate-400 font-mono">${product.specs || "16GB RAM | 512GB SSD"}</span>
+        </div>
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2 line-clamp-2">${product.title}</h3>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-2 flex-grow">${product.description}</p>
+        <div class="pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between mt-auto">
+          <span class="text-lg font-extrabold text-sky-600 dark:text-sky-400">$${product.price}</span>
+          <div class="flex items-center gap-2">
+            <label class="text-[10px] text-slate-600 dark:text-slate-400 flex items-center gap-1 cursor-pointer bg-slate-50 dark:bg-slate-900 px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-800">
+              <input type="checkbox" value="${product.id}" onchange="toggleCompare(${product.id}, this)" class="accent-sky-500">
+              <span>Bandingkan</span>
+            </label>
+            <button onclick="openModal(${product.id})" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors">Detail</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
+
 
 // ==========================================
 // 5. FILTERING & SEARCH SYSTEM
@@ -267,6 +180,8 @@ function triggerCustomFilters() {
       const text = (p.title + ' ' + p.description).toLowerCase();
       if (category === 'gaming') return text.includes('gaming') || text.includes('rtx');
       if (category === 'creator') return text.includes('creator') || text.includes('pro') || text.includes('oled');
+      if (category === 'coding') return text.includes('thinkpad') || text.includes('engineering');
+      if (category === 'office') return text.includes('carbon') || text.includes('yoga') || text.includes('kuliah');
       return true;
     });
   }
@@ -276,7 +191,8 @@ function triggerCustomFilters() {
   if (priceRange !== 'all') {
     filtered = filtered.filter(p => {
       if (priceRange === 'low') return p.price < 1000;
-      if (priceRange === 'high') return p.price >= 1000;
+      if (priceRange === 'mid') return p.price >= 1000 && p.price <= 1800;
+      if (priceRange === 'high') return p.price > 1800;
       return true;
     });
   }
@@ -290,6 +206,7 @@ function filterGlossary() {
     item.style.display = item.textContent.toLowerCase().includes(query) ? 'block' : 'none';
   });
 }
+
 
 // ==========================================
 // 6. MODAL & COMPARISON SYSTEM
@@ -362,6 +279,7 @@ function openComparisonModal() {
 function closeComparisonModal() {
   document.getElementById('comparison-modal').classList.add('hidden');
 }
+
 
 // ==========================================
 // 7. EXTERNAL APIS (Location & Consultation)
@@ -462,6 +380,7 @@ function setupConsultationForm() {
     });
 }
 
+
 // ==========================================
 // 8. UTILITIES (Toast & Scroll Spy)
 // ==========================================
@@ -475,7 +394,9 @@ function showToast(message, type = 'success') {
     
     const isSuccess = type === 'success';
     
-    toast.classList.add('bg-white', 'dark:bg-[#161e2e]');
+    // Perbaikan: Tambahkan kelas satu persatu tanpa spasi di dalam parameter add()
+    toast.classList.add('bg-white');
+    toast.classList.add('dark:bg-[#161e2e]');
     toast.classList.add(isSuccess ? 'border-sky-500' : 'border-red-500');
     toast.classList.add(isSuccess ? 'text-sky-600' : 'text-red-500');
     toast.classList.add(isSuccess ? 'dark:text-sky-300' : 'dark:text-red-400');
