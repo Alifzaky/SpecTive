@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpecTive - Native HTML & CSS</title>
+    <!-- Menghubungkan ke file CSS eksternal -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Semantic HTML: Navigasi -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">S</div>
+                <span>SpecTive</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#katalog">Katalog</a></li>
+                <li><a href="#edukasi">Tips & Edukasi</a></li>
+                <li><a href="#lokasi">Cari Toko</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Semantic HTML: Header/Hero Section -->
+    <header class="hero">
+        <div class="hero-container">
+            <span class="badge">Tugas Week 2</span>
+            <h1>Katalog Rekomendasi Laptop</h1>
+            <p>Tampilan ini dibangun murni menggunakan HTML Semantik dan CSS Native tanpa framework.</p>
+        </div>
+    </header>
+
+    <!-- Semantic HTML: Konten Utama -->
+    <main class="main-content">
+        <section id="katalog">
+            <!-- HTML Structure & Responsive Layout: Grid System -->
+            <div class="katalog-grid">
+                
+                <!-- Semantic HTML: Artikel untuk item independen (Laptop Card 1) -->
+                <article class="laptop-card">
+                    <div class="card-image">
+                        <img src="https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png" alt="Apple MacBook Pro 14 Inch">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="brand">Apple</span>
+                            <span class="specs">18GB RAM | 512GB SSD</span>
+                        </div>
+                        <h3 class="card-title">Apple MacBook Pro 14 Inch M3 Pro</h3>
+                        <p class="card-desc">Laptop kencang untuk kebutuhan video editing 4K, software engineering, dan desain profesional.</p>
+                        <div class="card-footer">
+                            <span class="price">$1999.99</span>
+                            <button class="btn-beli">Detail</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Laptop Card 2 -->
+                <article class="laptop-card">
+                    <div class="card-image">
+                        <img src="https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png" alt="Asus ROG Zephyrus">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="brand">Asus</span>
+                            <span class="specs">32GB RAM | 1TB SSD</span>
+                        </div>
+                        <h3 class="card-title">Asus ROG Zephyrus G16 Gaming</h3>
+                        <p class="card-desc">Laptop gaming ultra-thin dengan layar OLED 240Hz dan kartu grafis RTX seri terbaru.</p>
+                        <div class="card-footer">
+                            <span class="price">$2199.00</span>
+                            <button class="btn-beli">Detail</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Laptop Card 3 -->
+                <article class="laptop-card">
+                    <div class="card-image">
+                        <img src="https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/thumbnail.png" alt="Lenovo ThinkPad">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="brand">Lenovo</span>
+                            <span class="specs">16GB RAM | 512GB SSD</span>
+                        </div>
+                        <h3 class="card-title">Lenovo ThinkPad X1 Carbon Gen 11</h3>
+                        <p class="card-desc">Standar industri laptop bisnis dengan ketahanan militer dan keyboard terbaik di kelasnya.</p>
+                        <div class="card-footer">
+                            <span class="price">$1649.50</span>
+                            <button class="btn-beli">Detail</button>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Semantic HTML: Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 SpecTive Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
