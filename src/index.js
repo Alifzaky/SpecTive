@@ -37,11 +37,8 @@ function initEventListeners() {
         searchInput.addEventListener('input', (e) => applyFilters(e.target.value.toLowerCase(), activeBrandFilter));
     }
 
-    // Mobile Menu & Theme Toggle (Diload setelah komponen Navbar siap)
-    setTimeout(() => {
-        setupMobileMenu();
-        setupThemeToggle();
-    }, 100);
+    setupMobileMenu();
+    setupThemeToggle();
 
     // Location Search & Consultation Form
     setupLocationSearch();
