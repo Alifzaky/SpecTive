@@ -1,111 +1,208 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpecTive - Native HTML & CSS</title>
-    <!-- Menghubungkan ke file CSS eksternal -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpecTive - Platform Rekomendasi Laptop (Native)</title>
+  
+  <!-- Terhubung langsung ke file CSS Native -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
+<body class="dark-mode">
 
-    <!-- Semantic HTML: Navigasi -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">S</div>
-                <span>SpecTive</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="#katalog">Katalog</a></li>
-                <li><a href="#edukasi">Tips & Edukasi</a></li>
-                <li><a href="#lokasi">Cari Toko</a></li>
-            </ul>
-        </div>
-    </nav>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="#" class="logo-brand">
+        <div class="logo-icon">S</div>
+        <span>SpecTive</span>
+      </a>
+      
+      <div class="nav-links">
+        <a href="#katalog" class="nav-item">Katalog</a>
+        <a href="#edukasi" class="nav-item">Tips & Edukasi</a>
+        <a href="#matrix" class="nav-item">Hardware Matrix</a>
+        <a href="#lokasi" class="nav-item">Cari Toko</a>
+      </div>
 
-    <!-- Semantic HTML: Header/Hero Section -->
+      <div class="nav-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('katalog').scrollIntoView({behavior: 'smooth'})">
+          Cek Spesifikasi
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="container main-content">
+    
+    <!-- HEADER / HERO -->
     <header class="hero">
-        <div class="hero-container">
-            <span class="badge">Tugas Week 2</span>
-            <h1>Katalog Rekomendasi Laptop</h1>
-            <p>Tampilan ini dibangun murni menggunakan HTML Semantik dan CSS Native tanpa framework.</p>
-        </div>
+      <span class="badge badge-outline">
+        <span class="pulse-dot"></span> Platform Rekomendasi Laptop #1
+      </span>
+      <h1 class="hero-title">Temukan Laptop Terbaik Sesuai Kebutuhanmu</h1>
+      <p class="hero-subtitle">
+        Katalog laptop spesifikasi tinggi dengan harga transparan, dibangun menggunakan native HTML dan CSS murni.
+      </p>
     </header>
 
-    <!-- Semantic HTML: Konten Utama -->
-    <main class="main-content">
-        <section id="katalog">
-            <!-- HTML Structure & Responsive Layout: Grid System -->
-            <div class="katalog-grid">
-                
-                <!-- Semantic HTML: Artikel untuk item independen (Laptop Card 1) -->
-                <article class="laptop-card">
-                    <div class="card-image">
-                        <img src="https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png" alt="Apple MacBook Pro 14 Inch">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-meta">
-                            <span class="brand">Apple</span>
-                            <span class="specs">18GB RAM | 512GB SSD</span>
-                        </div>
-                        <h3 class="card-title">Apple MacBook Pro 14 Inch M3 Pro</h3>
-                        <p class="card-desc">Laptop kencang untuk kebutuhan video editing 4K, software engineering, dan desain profesional.</p>
-                        <div class="card-footer">
-                            <span class="price">$1999.99</span>
-                            <button class="btn-beli">Detail</button>
-                        </div>
-                    </div>
-                </article>
+    <!-- EDUKASI & MATRIX SECTION -->
+    <section id="edukasi" class="split-section">
+      <div class="edukasi-content">
+        <div class="section-label"><i class="fa-solid fa-lightbulb"></i> Tips & Panduan Pembeli</div>
+        <h2 class="section-title">Kenapa Harus Cermat Memilih Laptop di Era Komponen Mahal?</h2>
+        <p class="section-text">
+          Lonjakan harga komponen global membuat salah beli spesifikasi menjadi kesalahan fatal yang menguras dompet. Mahasiswa dan profesional dituntut memahami kesesuaian antara beban kerja (software) dengan kapasitas perangkat keras.
+        </p>
+        <ul class="feature-list">
+          <li>
+            <i class="fa-solid fa-circle-check icon-check"></i>
+            <span><strong>Mencegah Bottleneck:</strong> Performa optimal saat multitasking berat tanpa lag.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check icon-check"></i>
+            <span><strong>Efisiensi Anggaran:</strong> Investasi jangka panjang yang tahan hingga 4-5 tahun ke depan.</span>
+          </li>
+        </ul>
+      </div>
 
-                <!-- Laptop Card 2 -->
-                <article class="laptop-card">
-                    <div class="card-image">
-                        <img src="https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png" alt="Asus ROG Zephyrus">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-meta">
-                            <span class="brand">Asus</span>
-                            <span class="specs">32GB RAM | 1TB SSD</span>
-                        </div>
-                        <h3 class="card-title">Asus ROG Zephyrus G16 Gaming</h3>
-                        <p class="card-desc">Laptop gaming ultra-thin dengan layar OLED 240Hz dan kartu grafis RTX seri terbaru.</p>
-                        <div class="card-footer">
-                            <span class="price">$2199.00</span>
-                            <button class="btn-beli">Detail</button>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Laptop Card 3 -->
-                <article class="laptop-card">
-                    <div class="card-image">
-                        <img src="https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/thumbnail.png" alt="Lenovo ThinkPad">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-meta">
-                            <span class="brand">Lenovo</span>
-                            <span class="specs">16GB RAM | 512GB SSD</span>
-                        </div>
-                        <h3 class="card-title">Lenovo ThinkPad X1 Carbon Gen 11</h3>
-                        <p class="card-desc">Standar industri laptop bisnis dengan ketahanan militer dan keyboard terbaik di kelasnya.</p>
-                        <div class="card-footer">
-                            <span class="price">$1649.50</span>
-                            <button class="btn-beli">Detail</button>
-                        </div>
-                    </div>
-                </article>
-
+      <div id="matrix" class="matrix-card">
+        <div class="matrix-header">
+          <div class="matrix-title-wrapper">
+            <div class="matrix-icon"><i class="fa-solid fa-microchip"></i></div>
+            <div>
+              <h3>Smart Hardware Matrix</h3>
+              <p>Algoritma spesifikasi</p>
             </div>
-        </section>
-    </main>
-
-    <!-- Semantic HTML: Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2026 SpecTive Platform. All rights reserved.</p>
+          </div>
+          <span class="badge badge-success">Active</span>
         </div>
-    </footer>
+        <div class="matrix-body">
+          <div class="matrix-item">
+            <span>Coding / Developer</span>
+            <strong class="text-sky">Min. RAM 16GB + Ryzen 5</strong>
+          </div>
+          <div class="matrix-item">
+            <span>Desain Grafis / 3D</span>
+            <strong class="text-purple">Min. GPU 4GB + 100% sRGB</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KATALOG SECTION -->
+    <section id="katalog" class="katalog-section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="dot-indicator"></span> Katalog Rekomendasi</h2>
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" class="form-input search-input" placeholder="Cari laptop, brand...">
+        </div>
+      </div>
+
+      <!-- GRID LAPTOP -->
+      <div class="laptop-grid">
+        <!-- Card 1 -->
+        <article class="laptop-card">
+          <div class="card-image-wrapper">
+            <img src="https://cdn.dummyjson.com/products/images/laptops/Asus%20Zenbook%20Pro%20Dual%20Screen%20Laptop/thumbnail.png" alt="Acer Swift Go 14 AI">
+            <span class="status-badge status-ready">Ready</span>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="brand-tag">Acer</span>
+              <span class="specs-tag">32GB RAM | Ultra 7</span>
+            </div>
+            <h3 class="card-title">Acer Swift Go 14 AI</h3>
+            <p class="card-desc">Laptop tipis bertenaga AI dengan sistem pendingin kipas ganda dan layar OLED warna akurat.</p>
+            <div class="card-footer">
+              <span class="card-price">$1,199.00</span>
+              <button class="btn btn-primary">Beli</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="laptop-card">
+          <div class="card-image-wrapper">
+            <img src="https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png" alt="Apple MacBook Pro 14">
+            <span class="status-badge status-ready">Ready</span>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="brand-tag">Apple</span>
+              <span class="specs-tag">18GB RAM | 512GB SSD</span>
+            </div>
+            <h3 class="card-title">Apple MacBook Pro 14 Inch M3 Pro</h3>
+            <p class="card-desc">Laptop kencang untuk kebutuhan video editing 4K, software engineering, dan desain profesional.</p>
+            <div class="card-footer">
+              <span class="card-price">$1,999.99</span>
+              <button class="btn btn-primary">Beli</button>
+            </div>
+          </div>
+        </article>
+        
+        <!-- Card 3 -->
+        <article class="laptop-card">
+          <div class="card-image-wrapper">
+            <img src="https://cdn.dummyjson.com/products/images/laptops/Lenovo%20Yoga%20920/thumbnail.png" alt="Lenovo ThinkPad">
+            <span class="status-badge status-empty">Habis</span>
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="brand-tag">Lenovo</span>
+              <span class="specs-tag">16GB RAM | 512GB SSD</span>
+            </div>
+            <h3 class="card-title">Lenovo ThinkPad X1 Carbon</h3>
+            <p class="card-desc">Standar industri laptop bisnis dengan ketahanan militer dan keyboard terbaik di kelasnya.</p>
+            <div class="card-footer">
+              <span class="card-price">$1,649.50</span>
+              <button class="btn btn-primary">Beli</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- KONSULTASI SECTION -->
+    <section id="faq" class="form-section">
+      <div class="form-header">
+        <span class="badge badge-outline"><i class="fa-solid fa-headset"></i> Layanan Konsultasi</span>
+        <h2 class="section-title">Bingung Memilih Spesifikasi?</h2>
+        <p class="section-text">Kirimkan pesan mengenai kebutuhan harianmu. Tim analis kami siap membantu merancang spesifikasi terbaik.</p>
+      </div>
+      <div class="form-container">
+        <form>
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" class="form-input" placeholder="Cth: Alif Zaky">
+          </div>
+          <div class="form-group">
+            <label>Kebutuhan & Budget</label>
+            <textarea class="form-input" rows="4" placeholder="Jelaskan kebutuhan software dan batas budget anda..."></textarea>
+          </div>
+          <button type="button" class="btn btn-primary btn-block">Kirim Pesan Konsultasi</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo-icon">S</div>
+        <span class="footer-title">SpecTive</span>
+      </div>
+      <p class="footer-desc">Platform pembanding spesifikasi dan rekomendasi laptop terpercaya menggunakan native HTML dan CSS.</p>
+      <div class="footer-copy">
+        &copy; 2026 SpecTive Platform. All rights reserved.
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>
